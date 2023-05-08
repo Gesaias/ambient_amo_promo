@@ -11,7 +11,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: "Recepção Prefeitura Municipal de Jaru",
+      title: "Airport admin panel",
       theme: AppThemes.themData,
       defaultTransition: Transition.fadeIn,
       initialRoute: AppPages.INITIAL,
