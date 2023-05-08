@@ -9,23 +9,28 @@ volumes:
 services:
   app:
     build: ./app
+    container_name: app
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
     environment:
-      - API_APP_PORT=3004
+      - API_URL=http://172.26.0.1:3004/
     ports:
-      - "3000:3000"
+      - "8080:80"
     depends_on:
       - api_app
       - api_webservice
 
   api_app:
     build: ./api
+    container_name: api_app
+    entrypoint: sh -c "npm install && npm run seed && npm run start:dev"
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
     environment:
-      - API_WEBSERVICE_PORT=3001
-      - DB_ADMINISTRATIVE_PANEL_PORT=5433
+      - DB_HOST=172.26.0.1
+      - DB_HOST_T=172.26.0.1
+      - DB_HOST_H=172.26.0.1
+      - WEB_SERVICE_URL=http://172.26.0.1:3001
     ports:
       - "3004:3004"
     depends_on:
@@ -33,10 +38,14 @@ services:
 
   api_webservice:
     build: ./webservice_api
+    container_name: webservice
+    entrypoint: sh -c "npm install && npm run seed && npm run start:dev"
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
     environment:
-      - DB_DAILY_CONSUMPTION_PORT=5432
+      - DB_HOST=172.26.0.1
+      - DB_HOST_T=172.26.0.1
+      - DB_HOST_H=172.26.0.1
     ports:
       - "3001:3001"
     depends_on:

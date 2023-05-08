@@ -1,18 +1,26 @@
-# Use a imagem do Flutter SDK
-FROM ghcr.io/cirruslabs/flutter:stable
+FROM debian:stable-slim AS build-env
 
-# Copie o código-fonte da aplicação para o contêiner
+RUN apt-get update && apt-get install -y curl gnupg2 ca-certificates lsb-release
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get update && apt-get install -y git unzip nodejs
+
+RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
+ENV PATH "$PATH:/usr/local/flutter/bin"
+
+RUN flutter channel stable && flutter upgrade && flutter config --enable-web
+
 COPY . /app
 
-# Defina o diretório de trabalho
 WORKDIR /app
 
-# Instale as dependências da aplicação
 RUN flutter pub get
+RUN flutter build web --release
 
-EXPOSE 3000
+FROM nginx:1.24.0-alpine-slim
 
-# Compile a aplicação
-RUN flutter build web --profile
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build-env /app/build/web /usr/share/nginx/html
 
-CMD ["flutter", "run", "--profile", "-d", "web-server", "--web-port", "3000"]
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
