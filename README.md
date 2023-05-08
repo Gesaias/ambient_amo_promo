@@ -67,6 +67,6 @@ After that, the Front-End application will be ready for use with the user "demo"
 In these projects, the Flutter framework was used to develop the front-end web application and the NestJs framework to make the back-end services. The Flutter framework is a cross-platform framework where it is possible with a base of only compiling the application for Android, IOS, Windows, MacOS, Linux and Web, I chose it because it has more affinity despite also working with javascript and typescript frameworks, as for NestJS It is a NodeJs framework used to make scalable and easy to configure back-end applications, the framework documentation is excellent to help the developer to use the framework, I also chose it because it has a greater affinity than with other frameworks or languages.
 
 #### Below are links to each project developed separately:
-WebService API: https://github.com/Gesaias/daily_consumption_api
-Dashboard Admin APP: https://github.com/Gesaias/administrative_panel_app
-Admin API: https://github.com/Gesaias/administrative_panel_api
+- WebService API: https://github.com/Gesaias/daily_consumption_api
+- Dashboard Admin APP: https://github.com/Gesaias/administrative_panel_app
+- Admin API: https://github.com/Gesaias/administrative_panel_api
